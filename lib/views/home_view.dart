@@ -1,12 +1,15 @@
-import 'package:dokterian_app/core/utils/app_assets.dart';
-import 'package:dokterian_app/core/utils/app_colors.dart';
 import 'package:dokterian_app/core/utils/app_styles.dart';
 import 'package:dokterian_app/widgets/custom_app_bar.dart';
 import 'package:dokterian_app/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import '../core/utils/app_assets.dart';
+import '../core/utils/app_colors.dart';
+import '../widgets/categories.dart';
 import '../widgets/doctor_card.dart';
+import '../widgets/list_near_doctor.dart';
+import '../widgets/near_doctor_card.dart';
+import '../widgets/time_widget.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -20,6 +23,7 @@ class HomeView extends StatelessWidget {
             horizontal: 24,
           ),
           child: CustomScrollView(
+            physics: BouncingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                 child: SizedBox(
@@ -35,7 +39,10 @@ class HomeView extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: DoctorCard(),
+                child: DoctorCard(
+                  doctorName: 'Dr. Imran Syahir',
+                  doctorSpecialist: 'General Doctor',
+                ),
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
@@ -53,61 +60,26 @@ class HomeView extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Categories(),
               ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 32,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Text(
+                  'Near Doctor',
+                  style: AppStyles.font16SemiBold,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 16,
+                ),
+              ),
+              ListNearDoctor()
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class Categories extends StatelessWidget {
-  const Categories({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Category(),
-        Category(),
-        Category(),
-        Category(),
-      ],
-    );
-  }
-}
-
-class Category extends StatelessWidget {
-  const Category({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          Container(
-            height: 72,
-            width: 72,
-            decoration: BoxDecoration(
-              color: AppColors.lightWhiteColor,
-              borderRadius: BorderRadius.circular(500000),
-            ),
-            child: Center(
-              child: SvgPicture.asset(
-                Assets.imagesCovidIcon,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            'Covid 19',
-            style: AppStyles.font15Regular.copyWith(
-              color: AppColors.deepWhiteColor,
-            ),
-          ),
-        ],
       ),
     );
   }
